@@ -11,12 +11,9 @@ class App extends React.Component {
   super(props);
   this.state = {
     friends:[],
-          postSuccessMessage: '',
-      postError: '',
-      putSuccessMessage: '',
-    name: '',
-    email: '',
-    age: ''
+    postSuccessMessage: '',
+    postError: '',
+
   } 
 
   }
@@ -30,27 +27,32 @@ class App extends React.Component {
   }
 
 
-  handlePost = event => {
-    event.preventDefault();
-
-    const friend = {
-      name: this.state.name,
-      email: this.state.email,
-      age: this.state.age,
-    };
-
-    axios.post(`http://localhost:5000/friends`, { friend })
+  postFriend = friend => {
+    axios
+      .post(`http://localhost:5000/friends`, { 
+        name: friend.name,
+        age: friend.age,
+        email: friend.email
+         })
       .then(res => {
         console.log(res);
         console.log(res.data);
-        const friends = res.data;
-        this.setState({friends})        
+        this.setState({
+          friends: res.data,
+          postError: '',
+          postSuccessMessage: res.statusText + res.config.data
+        })        
       })
-      //       .then(res => {
-      //   const friends = res.data;
-      //   this.setState({friends})
-      // })
+       .catch(err => {
+       console.log(err);
+       this.setState({
+       postSuccessMessage: '',
+       postError: 'to err is human'
+      });
+    });
+ 
   }     
+
 
   render () {
     return (
@@ -73,4 +75,3 @@ class App extends React.Component {
 }
 
 export default App;
-//{this.state.friends.map(friend => <li>{friend.name}</li>)}
