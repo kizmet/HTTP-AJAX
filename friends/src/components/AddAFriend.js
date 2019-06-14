@@ -1,16 +1,16 @@
 import React from 'react';
-import AddFriendInput from './AddFriendInput'
-import ErrorMessage from './ErrorMessage';
-import SuccessMessage from './SuccessMessage';
 import axios from 'axios'
 import styled from 'styled-components';
 
 const Form = styled.form`
-  display: flex;
-  flex-direction:column;
-  width: 350px;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;  
+    padding:0;
+    max-width:480px;
+    width:100%;
 `;
-class AddFriendSection extends React.Component {
+class AddAFriend extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -42,7 +42,7 @@ class AddFriendSection extends React.Component {
 
     render() {
         return (
-      <div>
+      
         <Form onSubmit={this.postFriend}>
           <label autosize= "false">
             Add a New Friend:
@@ -70,21 +70,21 @@ class AddFriendSection extends React.Component {
             />  
           {
             this.props.postError ? 
-            (<ErrorMessage message={this.props.postError} />)
+            (<div>{this.props.postError}</div>)
             : 
             null
           }
           {
             this.props.postSuccessMessage ? 
-            (<SuccessMessage message={this.props.postSuccessMessage} />) 
+            (<div> {this.props.postSuccessMessage} </div>) 
             : 
             null
           }  
           <button type="submit">Add</button>
         </Form>
-      </div>
+      
             )
     }
 }
 
-export default AddFriendSection;
+export default AddAFriend;
